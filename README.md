@@ -8,5 +8,5 @@ rsync
 Usage :
 
 ```
-./main.sh <backup_dir>
+./MBP.sh <backup_dir>
 ````
