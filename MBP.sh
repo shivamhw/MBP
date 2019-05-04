@@ -3,7 +3,7 @@
 #mnt_dir=$(mtp-detect | grep -A 1 Found  | grep -v Found | cut -d ':' -f1)
 
 CON_DEV=$(jmtpfs -l | grep Device | wc -l)
-source ./copy.sh
+source ./lib
 clear
 
 #########################LISTING###################################
