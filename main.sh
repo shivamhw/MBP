@@ -21,10 +21,10 @@ read -p "Select Device : " in
 DEV_NAME=$(jmtpfs -l | cut -d "," -f6 | sed '1,2d' | sed -n "${in}p" | tr -d '[:space:]')
 if [[ -d ~/$DEV_NAME ]]
 then
-	if grep ~/$DEV_NAME /etc/mtab
+	if grep ~/$DEV_NAME /etc/mtab > /dev/null
 	then
 		echo Already Mounted.... Starting Backup
-		rsync_copy "$DEV_NAME"
+		rsync_copy "$DEV_NAME" "$1"
 	fi
 	echo Directory $DEV_NAME Exist! Remove it?
 	read choice
@@ -59,4 +59,4 @@ else
 	echo Failed
 fi
 echo Starting Backup 
-rsync_copy "$DEV_NAME"
+rsync_copy "$DEV_NAME" "$1"
