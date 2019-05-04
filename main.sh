@@ -3,7 +3,7 @@
 #mnt_dir=$(mtp-detect | grep -A 1 Found  | grep -v Found | cut -d ':' -f1)
 
 CON_DEV=$(jmtpfs -l | grep Device | wc -l)
-
+source ./copy.sh
 
 #########################LISTING###################################
 echo -e \\n
@@ -21,6 +21,11 @@ read -p "Select Device : " in
 DEV_NAME=$(jmtpfs -l | cut -d "," -f6 | sed '1,2d' | sed -n "${in}p" | tr -d '[:space:]')
 if [[ -d ~/$DEV_NAME ]]
 then
+	if grep ~/$DEV_NAME /etc/mtab
+	then
+		echo Already Mounted.... Starting Backup
+		rsync_copy "$DEV_NAME"
+	fi
 	echo Directory $DEV_NAME Exist! Remove it?
 	read choice
 	case $choice in
@@ -36,7 +41,6 @@ then
 		        ;;
 	esac	
 fi
-
 mkdir ~/$DEV_NAME
 if [[ $? -eq 0 ]] 
 then
@@ -54,5 +58,5 @@ then
 else
 	echo Failed
 fi
-
-
+echo Starting Backup 
+rsync_copy "$DEV_NAME"
