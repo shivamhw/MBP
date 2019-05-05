@@ -24,6 +24,6 @@ function rsync_copy {
 }
 
 function start_cp {
-	echo start_cp
+	rsync -ah --info=progress2  --exclude=*Android* --exclude=".*" $1 $2
 	exit 0
 }
